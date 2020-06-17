@@ -1,0 +1,10 @@
+*filter
+--check INPUT -j test_chain
+--check test_chain -j jump_chain
+--check test_chain -m set --match-set test_set src -j RETURN
+COMMIT
+*nat
+--check PREROUTING -j test_chain
+--check test_chain -m set --match-set test_set src -j RETURN
+COMMIT
+

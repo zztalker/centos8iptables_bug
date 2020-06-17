@@ -1,0 +1,18 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/8"
+  config.vm.box_version = "1905.1"
+  config.gatling.rsync_on_startup = false
+  config.vm.provision "shell", inline: <<-SCRIPT
+    ipset create test_set hash:net
+    ipset create test.set.v4.1 hash:net
+    ipset create test.set.v4.2 hash:net
+    ipset create test.set.v4.3 hash:net
+    ipset create test.set.v4.4 hash:net
+    ipset create test.set.v4.5 hash:net
+    ipset create test.set.v4.6 hash:net
+    iptables-restore < /vagrant/fill_iptables
+  SCRIPT
+end

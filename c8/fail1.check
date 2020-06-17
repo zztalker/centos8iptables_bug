@@ -1,0 +1,10 @@
+*filter
+--check INPUT -j test_chain
+--check test_chain -j jump_chain
+--check test_chain -j jump_chain2
+--check test_chain -p tcp -m multiport --dports 20003,20004,20013,20014 -j DROP
+COMMIT
+*nat
+--check PREROUTING -j test_chain
+COMMIT
+
